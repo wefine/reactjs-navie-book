@@ -20,11 +20,16 @@ class CommentApp extends Component {
         this.state = {}
     }
 
+    submit(comment) {
+        const {name, content} = comment;
+        console.log('name=' + name + '; content=' + content);
+    }
+
     // 渲染函数
     render() {
         return (
             <div className="wrapper">
-                <CommentInput/>
+                <CommentInput onSubmit={this.submit.bind(this)}/>
                 <CommentList/>
             </div>
         )
