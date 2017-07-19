@@ -96,9 +96,10 @@ body {
 .comment span {
     color: #00a3cf;
     font-style: italic;
+    margin-right: 10px;
 }
 
 .comment p {
-    margin: 0;
-    /*text-indent: 2em;*/
+    margin-top: 0;
+    margin-left: 10px;
 }
