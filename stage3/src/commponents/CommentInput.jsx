@@ -34,7 +34,7 @@ class CommentInput extends Component {
         console.log("_loadName:" + name);
 
         if(name) {
-            this.setState({name : name})
+            this.setState({name})
         }
     }
 

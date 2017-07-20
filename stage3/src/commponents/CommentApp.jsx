@@ -7,11 +7,29 @@ class CommentApp extends Component {
     constructor() {
         super();
         this.state = {
-            comments : []
+            comments: []
         }
     }
 
-    submit(comment) {
+    componentWillMount() {
+        this._loadComments();
+    }
+
+    _loadComments() {
+        let comments = localStorage.getItem("comments");
+        console.log("_loadComments" + comments);
+        if(comments) {
+            comments = JSON.parse(comments);
+            this.setState({ comments });
+        }
+    }
+
+    _saveComments(){
+        console.log("_saveComments");
+        localStorage.setItem('comments', JSON.stringify(this.state.comments));
+    }
+
+    handleSubmit(comment) {
         if (!comment) return;
 
         const {name, content} = comment;
@@ -23,14 +41,16 @@ class CommentApp extends Component {
         this.state.comments.push(comment);
         this.setState({
             comments: this.state.comments
-        })
+        });
+
+        this._saveComments();
     }
 
     // 渲染函数
     render() {
         return (
             <div className="wrapper">
-                <CommentInput onSubmit={this.submit.bind(this)}/>
+                <CommentInput onSubmit={this.handleSubmit.bind(this)}/>
                 <CommentList comments={this.state.comments}/>
             </div>
         )
