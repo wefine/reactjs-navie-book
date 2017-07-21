@@ -2,28 +2,31 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 class ThemeSwitch extends Component {
-    // 默认属性配置
-    static defaultProps = {
-        name: ''
+    static contextTypes = {
+        store: PropTypes.object
     };
 
-    // 属性类型限定
-    static propTypes = {
-        name: PropTypes.string
-    };
-
-    // 构造函数
     constructor() {
         super();
-        this.state = {}
+        this.state = { themeColor: '' }
+    }
+
+    componentWillMount() {
+        this._updateThemeColor()
+    }
+
+    _updateThemeColor() {
+        const { store } = this.context;
+        const state = store.getState();
+        this.setState({ themeColor: state.themeColor })
     }
 
     // 渲染函数
     render() {
         return (
             <div>
-                <button>Red</button>
-                <button>Blue</button>
+                <button style={{ color: this.state.themeColor }}>Red</button>
+                <button style={{ color: this.state.themeColor }}>Blue</button>
             </div>
         )
     }

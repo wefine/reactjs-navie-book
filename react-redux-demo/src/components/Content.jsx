@@ -3,27 +3,31 @@ import React, { Component } from 'react';
 import ThemeSwitch from './ThemeSwitch';
 
 class Content extends Component {
-    // 默认属性配置
-    static defaultProps = {
-        name: ''
+
+    static contextTypes = {
+        store: PropTypes.object
     };
 
-    // 属性类型限定
-    static propTypes = {
-        name: PropTypes.string
-    };
-
-    // 构造函数
     constructor() {
         super();
-        this.state = {}
+        this.state = { themeColor: '' }
+    }
+
+    componentWillMount() {
+        this._updateThemeColor()
+    }
+
+    _updateThemeColor() {
+        const { store } = this.context;
+        const state = store.getState();
+        this.setState({ themeColor: state.themeColor })
     }
 
     // 渲染函数
     render() {
         return (
             <div>
-                <p>React.js 小书内容</p>
+                <p style={{ color: this.state.themeColor }}>React.js 小书内容</p>
                 <ThemeSwitch />
             </div>
         )

@@ -1,29 +1,29 @@
-import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 class Header extends Component {
-    // 默认属性配置
-    static defaultProps = {
-        name: ''
+    static contextTypes = {
+        store: PropTypes.object
     };
 
-    // 属性类型限定
-    static propTypes = {
-        name: PropTypes.string
-    };
-
-    // 构造函数
     constructor() {
         super();
-        this.state = {}
+        this.state = { themeColor: '' }
     }
 
-    // 渲染函数
+    componentWillMount() {
+        this._updateThemeColor()
+    }
+
+    _updateThemeColor() {
+        const { store } = this.context;
+        const state = store.getState();
+        this.setState({ themeColor: state.themeColor })
+    }
+
     render() {
         return (
-            <div>
-                <h1>React.js 小书</h1>
-            </div>
+            <h1 style={{ color: this.state.themeColor }}>React.js 小书</h1>
         )
     }
 }
