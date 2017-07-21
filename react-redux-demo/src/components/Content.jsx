@@ -14,7 +14,9 @@ class Content extends Component {
     }
 
     componentWillMount() {
-        this._updateThemeColor()
+        const { store } = this.context;
+        this._updateThemeColor();
+        store.subscribe(() => this._updateThemeColor());
     }
 
     _updateThemeColor() {

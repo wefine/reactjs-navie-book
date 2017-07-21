@@ -12,7 +12,9 @@ class ThemeSwitch extends Component {
     }
 
     componentWillMount() {
-        this._updateThemeColor()
+        const { store } = this.context;
+        this._updateThemeColor();
+        store.subscribe(() => this._updateThemeColor());
     }
 
     _updateThemeColor() {
@@ -21,12 +23,25 @@ class ThemeSwitch extends Component {
         this.setState({ themeColor: state.themeColor })
     }
 
-    // 渲染函数
+    handleSwitchColor(color) {
+        const { store } = this.context;
+        store.dispatch({
+            type: 'CHANGE_COLOR',
+            themeColor: color
+        })
+    }
+
     render() {
         return (
             <div>
-                <button style={{ color: this.state.themeColor }}>Red</button>
-                <button style={{ color: this.state.themeColor }}>Blue</button>
+                <button
+                    style={{ color: this.state.themeColor }}
+                    onClick={this.handleSwitchColor.bind(this, 'red')}>Red
+                </button>
+                <button
+                    style={{ color: this.state.themeColor }}
+                    onClick={this.handleSwitchColor.bind(this, 'blue')}>Blue
+                </button>
             </div>
         )
     }
